@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,6 +21,7 @@ public class MainActivity extends Activity{
     private String[] titles;
     private ListView drawerList;
     private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerTogle;
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener{
 
@@ -43,21 +45,33 @@ public class MainActivity extends Activity{
         if(savedInstanceState == null)
             selectItem(0);
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+        drawerTogle = new ActionBarDrawerToggle(
                 this, drawerLayout, R.string.drower_open, R.string.drower_close){
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
+                invalidateOptionsMenu();
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
             }
         };
 
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        drawerLayout.addDrawerListener(drawerTogle);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean isDrawerOpen = drawerLayout.isDrawerOpen(drawerList);
+        menu.findItem(R.id.action_share).setVisible(!isDrawerOpen);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -73,6 +87,10 @@ public class MainActivity extends Activity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(drawerTogle.onOptionsItemSelected(item)){
+            return true;
+        }
+
         switch (item.getItemId()){
             case R.id.action_create_order:
                 Intent intent = new Intent(this, OrderActivity.class);
@@ -126,5 +144,17 @@ public class MainActivity extends Activity{
         else
             title = titles[position];
         getActionBar().setTitle(title);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerTogle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerTogle.onConfigurationChanged(newConfig);
     }
 }
