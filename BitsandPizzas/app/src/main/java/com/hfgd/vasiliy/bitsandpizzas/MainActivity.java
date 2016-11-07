@@ -69,7 +69,6 @@ public class MainActivity extends Activity{
         };
 
         drawerLayout.addDrawerListener(drawerTogle);
-
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
