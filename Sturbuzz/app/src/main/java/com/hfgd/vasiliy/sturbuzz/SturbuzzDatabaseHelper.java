@@ -38,7 +38,7 @@ public class SturbuzzDatabaseHelper extends SQLiteOpenHelper {
     private void updateDatabase(SQLiteDatabase db, int oldVersion, int newVersion){
         if (oldVersion < 1){
             db.execSQL(
-                    "create database drink (" +
+                    "create table drink(" +
                             "_id integer primary key autoincrement," +
                             "name text," +
                             "description text," +
