@@ -51,7 +51,7 @@ public class SturbuzzDatabaseHelper extends SQLiteOpenHelper {
             insertDrink(db, "Filter", "Our best drip coffee", R.drawable.filter);
         }
         if(oldVersion < 2){
-            db.execSQL("ALTER TABLE DRINK ADD COLUMN FAVORITE NUMERIC;");
+            db.execSQL("ALTER TABLE drink ADD COLUMN favorite NUMERIC;");
         }
 
     }

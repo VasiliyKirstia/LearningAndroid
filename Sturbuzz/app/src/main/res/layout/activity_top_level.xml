@@ -23,4 +23,17 @@
         android:layout_height="wrap_content"
         android:entries="@array/options"
         android:layout_below="@id/logo"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/favorites"
+        android:layout_marginTop="50dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list_favorites"/>
+
 </RelativeLayout>
